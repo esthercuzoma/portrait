@@ -64,8 +64,6 @@ function draw() {
   stroke(44, 55, 96);
   fill(30,95,92, 0.65);
 
-  
-
   star(glasses.x, glasses.y, 75,150,10);
 
   strokeWeight(1.5);
@@ -76,13 +74,14 @@ function draw() {
   if (state == 1) {
     drawingContext.filter = "blur(0px)";
     stroke(233, 31, 50);
+    strokeWeight(4);
 
     fill(173, 28, 85, 0.35);
     circle(327, 327, 80);
     circle(451, 310, 90);
 
     noFill();
-    strokeWeight(7);
+    strokeWeight(8);
 
     beginShape();
     curveVertex(365, 318);
@@ -1430,7 +1429,7 @@ function body() {
 class spark {
   constructor() {
     this.pos = createVector(glasses.x, glasses.y);
-    this.vel = p5.Vector.random2D().normalize().mult(random(5,10));
+    this.vel = p5.Vector.random2D().normalize().mult(random(8,15));
   }
 
   update() {
@@ -1438,13 +1437,15 @@ class spark {
   }
 
   show() {
-    stroke(30, 93, 93);
+    
+    stroke(45, 85, 94);
+
     strokeWeight(4)
-    fill(255,0.5);
+    fill(255,0.9);
     
     push()
     translate(this.pos.x,this.pos.y)
-    rotate(frameCount/10)
+    rotate(frameCount/50)
     star(0,0,7,15,10);
     pop()
     
