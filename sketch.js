@@ -18,7 +18,7 @@ function setup() {
 
   glasses = createVector(211, 753);
   
-      for (var i = 0; i < 25; i++){
+      for (var i = 0; i < 45; i++){
       sparkles.push(new spark())
     }
   
@@ -28,6 +28,7 @@ function setup() {
 function draw() {
   if (state == 0) {
     drawingContext.filter = "blur(10px)";
+
   }
 
   noStroke();
@@ -81,6 +82,7 @@ function draw() {
     circle(451, 310, 90);
 
     noFill();
+    stroke(233, 31, 40);
     strokeWeight(8);
 
     beginShape();
@@ -1429,7 +1431,7 @@ function body() {
 class spark {
   constructor() {
     this.pos = createVector(glasses.x, glasses.y);
-    this.vel = p5.Vector.random2D().normalize().mult(random(8,15));
+    this.vel = p5.Vector.random2D().normalize().mult(random(2,15));
   }
 
   update() {
@@ -1441,7 +1443,7 @@ class spark {
     stroke(45, 85, 94);
 
     strokeWeight(4)
-    fill(255,0.9);
+    fill(255,0.85);
     
     push()
     translate(this.pos.x,this.pos.y)
