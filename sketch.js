@@ -2,7 +2,7 @@ let port,
   texty = "";
 let opac = 0;
 let state = 0;
-
+let ready = true;
 let sparkles = [];
 
 function preload() {
@@ -14,21 +14,28 @@ function setup() {
   imageMode(CENTER);
   ellipseMode(CENTER);
   colorMode(HSB);
+
+  song = loadSound("DOMi & JD BECK, Thundercat - BOWLiNG (Audio).mp3");
+
   //glasses = createVector(random(60, width-60),random(60, height-60));
 
   glasses = createVector(211, 753);
-  
-      for (var i = 0; i < 45; i++){
-      sparkles.push(new spark())
-    }
-  
-  
+
+  for (var i = 0; i < 80; i++) {
+    sparkles.push(new spark());
+  }
 }
 
 function draw() {
   if (state == 0) {
-    drawingContext.filter = "blur(10px)";
-
+    if (
+      navigator.userAgent.indexOf("Safari") != -1 &&
+      navigator.userAgent.indexOf("Chrome") == -1
+    ) {
+      canvas.classList.add("blur-effect");
+    } else {
+      drawingContext.filter = "blur(10px)";
+    }
   }
 
   noStroke();
@@ -56,24 +63,35 @@ function draw() {
   noStroke();
   rect(0, 0, 60, height);
   rect(width - 60, 0, 60, height);
-  
+
   // blue
   fill(173, 28, 85);
   rect(0, 0, width, 60);
   rect(0, height - 60, width, 60);
 
   stroke(44, 55, 96);
-  fill(30,95,92, 0.65);
+  fill(30, 95, 92, 0.65);
 
-  star(glasses.x, glasses.y, 75,150,10);
+  star(glasses.x, glasses.y, 75, 150, 10);
 
   strokeWeight(1.5);
   // text(texty, 10, 20, 100);
 
-  drawingContext.filter = "blur(10px)";
-
   if (state == 1) {
-    drawingContext.filter = "blur(0px)";
+    
+        if (
+      navigator.userAgent.indexOf("Safari") != -1 &&
+      navigator.userAgent.indexOf("Chrome") == -1
+    ) {
+      canvas.classList.remove('blur-effect');
+    } else {
+      drawingContext.filter = "blur(0px)";
+    }
+    
+    if(ready == true){
+      song.play();
+      ready = false;
+    }
     stroke(233, 31, 50);
     strokeWeight(4);
 
@@ -94,8 +112,8 @@ function draw() {
     curveVertex(408, 313);
     curveVertex(408, 313);
     endShape();
-    
-    for (var i = sparkles.length-1; i >= 0; i--){
+
+    for (var i = sparkles.length - 1; i >= 0; i--) {
       sparkles[i].update();
       sparkles[i].show();
     }
@@ -111,7 +129,7 @@ function mouseClicked() {
   }
 
   texty = mouseX + "," + mouseY;
-  console.log("curveVertex(" + texty + ");");
+  // console.log("curveVertex(" + texty + ");");
 }
 
 function name() {
@@ -1431,7 +1449,7 @@ function body() {
 class spark {
   constructor() {
     this.pos = createVector(glasses.x, glasses.y);
-    this.vel = p5.Vector.random2D().normalize().mult(random(2,15));
+    this.vel = p5.Vector.random2D().normalize().mult(random(1, 13));
   }
 
   update() {
@@ -1439,18 +1457,16 @@ class spark {
   }
 
   show() {
-    
     stroke(45, 85, 94);
 
-    strokeWeight(4)
-    fill(255,0.85);
-    
-    push()
-    translate(this.pos.x,this.pos.y)
-    rotate(frameCount/50)
-    star(0,0,7,15,10);
-    pop()
-    
+    strokeWeight(4);
+    fill(255, 0.85);
+
+    push();
+    translate(this.pos.x, this.pos.y);
+    rotate(frameCount / 50);
+    star(0, 0, 7, 15, 10);
+    pop();
   }
 }
 
